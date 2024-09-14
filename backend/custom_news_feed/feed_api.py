@@ -23,6 +23,7 @@ def home():
 @app.route('/api/articles_for_custom_feed', methods=['GET'])
 def fetch_data():
     data = get_custom_news()
+    data = [article.to_dict() for article in data]
     return jsonify(data)
 
 if __name__ == '__main__':

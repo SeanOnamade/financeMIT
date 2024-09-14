@@ -22,3 +22,17 @@ class NewsArticle():
         self.topics = topics
         self.sentiment = sentiment
         self.type = type
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'news_url': self.news_url,
+            'image_url': self.image_url,
+            'title': self.title,
+            'text': self.text,
+            'source_name': self.source_name,
+            'date': self.date,
+            'topics': self.topics,
+            'sentiment': self.sentiment,
+            'type': self.type,
+        }
