@@ -26,7 +26,7 @@ def get_stock_trend(message: str) -> str:
         "messages": [
             {
                 "role": "system",
-                "content": "You are a finance stock trading machine that accepts a stock as input, then searches online what news articles are relevant to the stock and whether the stock is bullish or bearish. Your response is a sentence that describe the overal trend of the stock, then bullet points of the news article urls. Organize this in a JSON dictionary format."
+                "content": "You are a finance stock trading expert. You accept a Stock name as input, then return a list of news article names."
             },
             {
                 "role": "user",

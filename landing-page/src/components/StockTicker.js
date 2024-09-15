@@ -102,22 +102,72 @@ const StockTicker = () => {
 
   const fetchStockTrend = async (stockSymbol) => {
     const apiUrl = `http://127.0.0.1:5000/stock/${stockSymbol}`;
-
+  
     try {
       console.log(`Fetching data for ${stockSymbol}`);
-      const response = await axios.get(apiUrl);
-      console.log('Stock trend data:', response.data);
-      
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('Stock trend data:', data);
+  
       // Extract the message content
-      const messageContent = response.data.choices[0].message.content;
+      const messageContent = data.choices[0].message.content;
       console.log('Extracted message content:', messageContent);
+  
+      // Convert the string into JSON
+      const jsonObject = parseData(messageContent);
+      console.log('Parsed JSON object:', jsonObject);
+  
+      // Select and print a random news article
+      const index = getRandomNewsArticle(jsonObject);
 
-      return messageContent;
+      return jsonObject["news_article_names"][index].substring(5, jsonObject["news_article_names"][index].length - 2);
     } catch (error) {
-      console.error('Error fetching stock trend:', error.response || error);
+      console.error('Error fetching stock trend:', error);
       throw error;
     }
   };
+  
+  // Function to parse the string into JSON
+  function parseData(dataString) {
+    const lines = dataString.trim().split('\n');
+  
+    // Extracting article names
+    const nameStartIndex = lines.indexOf('### News Article Names') + 1;
+    const nameEndIndex = lines.indexOf('### News Article URLs');
+    const names = lines.slice(nameStartIndex, nameEndIndex)
+                        .map(line => line.replace(/^\d+\.\s*"/, '').replace(/"$/, ''));
+  
+    // Extracting article URLs
+    const urls = lines.slice(nameEndIndex + 1)
+                       .map(line => line.trim());
+  
+    // Constructing the JSON object
+    const jsonObject = {
+      news_article_names: names,
+      news_article_urls: urls
+    };
+  
+    return jsonObject;
+  }  
+
+  // Function to select and print a random news article and URL
+  function getRandomNewsArticle(jsonObject) {
+    const { news_article_names, news_article_urls } = jsonObject;
+
+    if (news_article_names.length === 0 || news_article_urls.length === 0) {
+      console.log('No news articles found.');
+      return;
+    }
+
+    return Math.floor(Math.random() * news_article_names.length);
+  }
 
   const handleCompanyClick = (symbol) => {
     setSelectedCompany(symbol);
