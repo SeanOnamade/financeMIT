@@ -40,17 +40,18 @@ def add_news_for_return(file_name, nb_files):
     nb_files = min(nb_files, len(raw_data['data']))
     
     for i in range(nb_files):
+        article = raw_data['data'][i]
         new_news = NewsArticle(
             id = i,
-            news_url    = raw_data['data'][i]['news_url'],
-            image_url   = raw_data['data'][i]['image_url'],
-            title       = raw_data['data'][i]['title'],
-            text        = raw_data['data'][i]['text'],
-            source_name = raw_data['data'][i]['source_name'],
-            date        = raw_data['data'][i]['date'],
-            topics      = raw_data['data'][i]['topics'],
-            sentiment   = raw_data['data'][i]['sentiment'],
-            type        = raw_data['data'][i]['type'],
+            news_url    = article.get('news_url', '#'),
+            image_url   = article.get('image_url', 'https://placehold.jp/256x256.png'),
+            title       = article.get('title', 'No Title'),
+            text        = article.get('text', 'No Content'),
+            source_name = article.get('source_name', 'Unknown Source'),
+            date        = article.get('date', ''),
+            topics      = article.get('topics', []),
+            sentiment   = article.get('sentiment', 'Neutral'),
+            type        = article.get('type', 'General'),
         )
         if new_news.title not in seen:
             seen.add(new_news.title)
@@ -70,13 +71,12 @@ pickle_file_for_general_news = 'pickles/general.pickle'
 # call_news_api(general_news_url, pickle_file_for_general_news) # run only once and comment out to avoid running into our api limits
 add_news_for_return(pickle_file_for_general_news, 10)
 
-
 # STOCK NEWS
 tickers = get_tickers_in_portfolio(fake_portfolio)
 for ticker in tickers:
     ticker_url = f"https://stocknewsapi.com/api/v1?tickers={ticker}&items=3&page=1&token=tmy1t6qddm2oqp4vdru8i58khd5ig6qvgobfh2e1"
-    # call_news_api(ticker_url, "some_ticker.pickle")
-    add_news_for_return("pickles/some_ticker.pickle", 3)
+    # call_news_api(ticker_url, f"pickles/{ticker}.pickle")
+    add_news_for_return(f"pickles/{ticker}.pickle", 3)
 
 # shuffle results, and store them for persistence
 random.shuffle(news_to_return)
@@ -84,7 +84,24 @@ with open("pickles/news_to_return.pickle", 'wb') as f:
     pickle.dump(news_to_return, f)
     print("Final results saved to return news.pickle")
 
-# API function
-def get_custom_news():
-    return news_to_return
+# def get_custom_news():
+#     return news_to_return
 
+class NewsArticle:
+    def __init__(self, id, news_url, image_url, title, text, source_name, date, topics, sentiment, type):
+        self.id = id
+        self.news_url = news_url
+        self.image_url = image_url
+        self.title = title
+        self.text = text
+        self.source_name = source_name
+        self.date = date
+        self.topics = topics
+        self.sentiment = sentiment
+        self.type = type
+
+def get_custom_news():
+    # Load the news articles from the pickle file
+    with open("pickles/news_to_return.pickle", 'rb') as f:
+        news_list = pickle.load(f)
+    return news_list
