@@ -3,7 +3,7 @@ import FeedArticle from '../components/FeedArticle'
 
 function Newsfeed() {
     return (
-    <div>
+    <div className="mb-96">
         <FeedArticle />
     </div>
     )
