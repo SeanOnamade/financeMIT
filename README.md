@@ -9,7 +9,7 @@ Tool providing market recommendations for casual investors.
 <div align="center">
 
   <a href="https://github.com/SeanOnamade/financemit">
-    <img src="logo.png" alt="Logo" width="80" height="80">
+    <img src="logo.png" alt="Logo">
   </a>
 
 <h3 align="center">FinanceMIT</h3>
@@ -58,7 +58,9 @@ Tool providing market recommendations for casual investors.
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Screenshot](https://github.com/SeanOnamade/financemit/blob/master/Screenshot_1.png)
+<p align="center">
+<img src="https://github.com/SeanOnamade/financemit/blob/main/Screenshot1.png" />
+</p>
 
 Our tool aims to help casual investors make informed decisions by combining AI-driven analysis of news sentiment with personalized portfolio management, offering a unique perspective on global investment opportunities.
 Created @ HackMIT with
@@ -112,7 +114,9 @@ To get a local copy up and running follow these simple example steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-![Screenshot](https://github.com/SeanOnamade/financemit/blob/master/Screenshot_2.png)
+<p align="center">
+<img src="https://github.com/SeanOnamade/financemit/blob/main/Screenshot2.png" />
+</p>
 
 The home page provides the user with a view of the main sections, including:
 - A personalized news feed focusing on stocks in the user's portfolio and related companies
@@ -141,11 +145,11 @@ See the [open issues](https://github.com/SeanOnamade/financemit/issues) for a fu
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-![Screenshot](https://github.com/SeanOnamade/financemit/blob/master/Screenshot_3.png)
-![Screenshot](https://github.com/SeanOnamade/financemit/blob/master/Screenshot_5.png)
-![Screenshot](https://github.com/SeanOnamade/financemit/blob/master/Screenshot_6.png)
 <p align="center">
-<img src="https://github.com/SeanOnamade/financemit/blob/master/Screenshot_4.png" width="350" />
+<img src="https://github.com/SeanOnamade/financemit/blob/main/Screenshot3.png" />
+</p>
+<p align="center">
+<img src="https://github.com/SeanOnamade/financemit/blob/main/Screenshot4.png" />
 </p>
 
 
