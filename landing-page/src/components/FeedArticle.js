@@ -30,6 +30,17 @@ function FeedArticle() {
             blurb = "Lorem ipsum odor amet, consectetuer adipiscing elit. Libero ornare justo; in lacus tortor nullam varius sapien faucibus? Nisl netus tortor magna duis pulvinar enim. Facilisis vestibulum ullamcorper lacus mattis commodo malesuada finibus porttitor. Sociosqu euismod sociosqu volutpat praesent malesuada viverra tempus primis aptent. Sapien mauris ornare dapibus et commodo inceptos sapien. Taciti conubia risus nibh ante vehicula euismod morbi nulla. Feugiat condimentum sollicitudin, maecenas platea nulla dolor diam? Eros quisque cursus velit praesent lacinia gravida hac volutpat non..." />
             {/* Change color of ticker based on stock change for the day */}
           <hr></hr>
+          <Post 
+            author = "Bob Roberts" // authoring site or person ??
+            title = "Falling Stocks" // article title //
+            ticker = "DIS ↑1.40%" // {add percent change} ??
+            date = "Sep 14, 2024" // might have to be reformatted //
+            link = "https://www.w3schools.com" // article link //
+            image = "https://placehold.jp/256x256.png" // the link of the article image //
+            blurb = "Lorem ipsum odor amet, consectetuer adipiscing elit. Libero ornare justo; in lacus tortor nullam varius sapien faucibus? Nisl netus tortor magna duis pulvinar enim. Facilisis vestibulum ullamcorper lacus mattis commodo malesuada finibus porttitor. Sociosqu euismod sociosqu volutpat praesent malesuada viverra tempus primis aptent. Sapien mauris ornare dapibus et commodo inceptos sapien. Taciti conubia risus nibh ante vehicula euismod morbi nulla. Feugiat condimentum sollicitudin, maecenas platea nulla dolor diam? Eros quisque cursus velit praesent lacinia gravida hac volutpat non..." />
+            {/* In essence, pull the author, title, ticket, date, link, image, and start of the body */}
+            {/* 585 characters */}
+            {/* Change color of ticker based on stock change for the day */}
           
         </div>
     )
