@@ -8,51 +8,52 @@ function FeedArticle({ author, title, ticker, date, link, image, blurb }) {
     console.log("Article link:", link);
     return (
         <div className="feed">
-            {/* <Post 
+            <Post 
             author = {author} // authoring site or person ??
             title = {title} // article title //
             ticker = {ticker} // {add percent change} ??
             date = {date} // might have to be reformatted //
             link = {link} // article link //
             image = {image} // the link of the article image //
-            blurb = {blurb} /> */}
-            
+            blurb = {blurb} />
           <hr></hr>
+          </div>
 
         
-            <Post 
-            author = "Bob Roberts" // authoring site or person ??
-            title = "Falling Stocks" // article title //
-            ticker = "DIS ↑1.40%" // {add percent change} ??
-            date = "Sep 14, 2024" // might have to be reformatted //
-            link = "https://www.w3schools.com" // article link //
-            image = "https://placehold.jp/256x256.png" // the link of the article image //
-            blurb = "Lorem ipsum odor amet, consectetuer adipiscing elit. Libero ornare justo; in lacus tortor nullam varius sapien faucibus? Nisl netus tortor magna duis pulvinar enim. Facilisis vestibulum ullamcorper lacus mattis commodo malesuada finibus porttitor. Sociosqu euismod sociosqu volutpat praesent malesuada viverra tempus primis aptent. Sapien mauris ornare dapibus et commodo inceptos sapien. Taciti conubia risus nibh ante vehicula euismod morbi nulla. Feugiat condimentum sollicitudin, maecenas platea nulla dolor diam? Eros quisque cursus velit praesent lacinia gravida hac volutpat non..." />
-            {/* In essence, pull the author, title, ticket, date, link, image, and start of the body */}
-            {/* 585 characters */}
-            {/* Change color of ticker based on stock change for the day */}
-          <hr></hr>
-            {/* <span>This is my first post!</span> */}
-            <Post 
-            author = "Bob Roberts" 
-            title = "Falling Stocks" 
-            ticker = "DIS ↑1.40%" // {add percent change}
-            date = "Sep 14, 2024"
-            link = "https://www.w3schools.com"
-            image = "https://placehold.jp/300x150.png"
-            blurb = "Lorem ipsum odor amet, consectetuer adipiscing elit. Libero ornare justo; in lacus tortor nullam varius sapien faucibus? Nisl netus tortor magna duis pulvinar enim. Facilisis vestibulum ullamcorper lacus mattis commodo malesuada finibus porttitor. Sociosqu euismod sociosqu volutpat praesent malesuada viverra tempus primis aptent. Sapien mauris ornare dapibus et commodo inceptos sapien. Taciti conubia risus nibh ante vehicula euismod morbi nulla. Feugiat condimentum sollicitudin, maecenas platea nulla dolor diam? Eros quisque cursus velit praesent lacinia gravida hac volutpat non..." />
-            {/* Change color of ticker based on stock change for the day */}
-          <hr></hr>
-          <Post 
-            author = "Bob Roberts" // authoring site or person ??
-            title = "Falling Stocks" // article title //
-            ticker = "DIS ↑1.40%" // {add percent change} ??
-            date = "Sep 14, 2024" // might have to be reformatted //
-            link = "https://www.w3schools.com" // article link //
-            image = "https://placehold.jp/256x256.png" // the link of the article image //
-            blurb = "Lorem ipsum odor amet, consectetuer adipiscing elit. Libero ornare justo; in lacus tortor nullam varius sapien faucibus? Nisl netus tortor magna duis pulvinar enim. Facilisis vestibulum ullamcorper lacus mattis commodo malesuada finibus porttitor. Sociosqu euismod sociosqu volutpat praesent malesuada viverra tempus primis aptent. Sapien mauris ornare dapibus et commodo inceptos sapien. Taciti conubia risus nibh ante vehicula euismod morbi nulla. Feugiat condimentum sollicitudin, maecenas platea nulla dolor diam? Eros quisque cursus velit praesent lacinia gravida hac volutpat non..." />
-        </div>
-           
+        //     <Post 
+        //     author = "Bob Roberts" // authoring site or person ??
+        //     title = "Falling Stocks" // article title //
+        //     ticker = "DIS ↑1.40%" // {add percent change} ??
+        //     date = "Sep 14, 2024" // might have to be reformatted //
+        //     link = "https://www.w3schools.com" // article link //
+        //     image = "https://placehold.jp/256x256.png" // the link of the article image //
+        //     blurb = "Lorem ipsum odor amet, consectetuer adipiscing elit. Libero ornare justo; in lacus tortor nullam varius sapien faucibus? Nisl netus tortor magna duis pulvinar enim. Facilisis vestibulum ullamcorper lacus mattis commodo malesuada finibus porttitor. Sociosqu euismod sociosqu volutpat praesent malesuada viverra tempus primis aptent. Sapien mauris ornare dapibus et commodo inceptos sapien. Taciti conubia risus nibh ante vehicula euismod morbi nulla. Feugiat condimentum sollicitudin, maecenas platea nulla dolor diam? Eros quisque cursus velit praesent lacinia gravida hac volutpat non..." />
+        //     {/* In essence, pull the author, title, ticket, date, link, image, and start of the body */}
+        //     {/* 585 characters */}
+        //     {/* Change color of ticker based on stock change for the day */}
+        //   <hr></hr>
+        //     {/* <span>This is my first post!</span> */}
+        //     <Post 
+        //     author = "Bob Roberts" 
+        //     title = "Falling Stocks" 
+        //     ticker = "DIS ↑1.40%" // {add percent change}
+        //     date = "Sep 14, 2024"
+        //     link = "https://www.w3schools.com"
+        //     image = "https://placehold.jp/300x150.png"
+        //     blurb = "Lorem ipsum odor amet, consectetuer adipiscing elit. Libero ornare justo; in lacus tortor nullam varius sapien faucibus? Nisl netus tortor magna duis pulvinar enim. Facilisis vestibulum ullamcorper lacus mattis commodo malesuada finibus porttitor. Sociosqu euismod sociosqu volutpat praesent malesuada viverra tempus primis aptent. Sapien mauris ornare dapibus et commodo inceptos sapien. Taciti conubia risus nibh ante vehicula euismod morbi nulla. Feugiat condimentum sollicitudin, maecenas platea nulla dolor diam? Eros quisque cursus velit praesent lacinia gravida hac volutpat non..." />
+        //     {/* Change color of ticker based on stock change for the day */}
+        //   <hr></hr>
+        //   <Post 
+        //     author = "Bob Roberts" // authoring site or person ??
+        //     title = "Falling Stocks" // article title //
+        //     ticker = "DIS ↑1.40%" // {add percent change} ??
+        //     date = "Sep 14, 2024" // might have to be reformatted //
+        //     link = "https://www.w3schools.com" // article link //
+        //     image = "https://placehold.jp/256x256.png" // the link of the article image //
+        //     blurb = "Lorem ipsum odor amet, consectetuer adipiscing elit. Libero ornare justo; in lacus tortor nullam varius sapien faucibus? Nisl netus tortor magna duis pulvinar enim. Facilisis vestibulum ullamcorper lacus mattis commodo malesuada finibus porttitor. Sociosqu euismod sociosqu volutpat praesent malesuada viverra tempus primis aptent. Sapien mauris ornare dapibus et commodo inceptos sapien. Taciti conubia risus nibh ante vehicula euismod morbi nulla. Feugiat condimentum sollicitudin, maecenas platea nulla dolor diam? Eros quisque cursus velit praesent lacinia gravida hac volutpat non..." />
+        //     {/* In essence, pull the author, title, ticket, date, link, image, and start of the body */}
+        //     {/* 585 characters */}
+        //     {/* Change color of ticker based on stock change for the day */}
           
     )
 }
