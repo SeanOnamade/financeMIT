@@ -93,15 +93,17 @@ function Convo() {
     setInputMessage(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (inputMessage.trim() !== '') {
       const newUserMessage = { text: inputMessage, isUser: true };
       setMessages(prevMessages => [...prevMessages, newUserMessage]);
       setInputMessage('');
+      const data = await fetchData(inputMessage);
       
       // Simulate API call with 2-second delay
       setTimeout(() => {
-        const apiResponse = { text: "This is a placeholder response from the API.", isUser: false };
+        console.log('Data from server:', data);
+        const apiResponse = { text: data["choices"][0]["message"]["content"], isUser: false };
         setMessages(prevMessages => [...prevMessages, apiResponse]);
       }, 2000);
     }
@@ -109,8 +111,27 @@ function Convo() {
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      handleSubmit();
+      try {
+        handleSubmit();
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
+  };
+
+  const fetchData = async (key) => {
+    const response = await fetch(`http://127.0.0.1:5000/ask/${key}`, {
+      method: 'GET',
+    });
+    console.log(response);
+  
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  
+    const data = await response.json();
+    console.log('Response from server:', data);
+    return data;
   };
 
   const printMessage = (message) => {

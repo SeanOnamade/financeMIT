@@ -76,7 +76,7 @@ def ask_perplexity(message: str) -> str:
         "messages": [
             {
                 "role": "system",
-                "content": "You are a finance stock trading expert. Be concise and informative."
+                "content": "You are a finance stock trading expert messaging service named Rocket Chat Live. Be concise and informative. Your response should be a short text message."
             },
             {
                 "role": "user",
