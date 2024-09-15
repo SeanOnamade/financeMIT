@@ -1,2 +1,3 @@
-# financeMIT
-Tool providing market recommendations for casual investors.
+# Rocket 
+
+A tool providing real-time, customized market recommendations for casual investors.
