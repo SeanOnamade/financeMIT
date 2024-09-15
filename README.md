@@ -7,8 +7,9 @@ Tool providing market recommendations for casual investors.
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
+
   <a href="https://github.com/SeanOnamade/financemit">
-<!--     <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
+    <img src="logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">FinanceMIT</h3>
@@ -94,7 +95,16 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/SeanOnamade/weaponappv1.git
+   git clone https://github.com/SeanOnamade/financeMIT.git
+   ```
+2. CD in and npm i to install all packages
+   ```sh
+   npm i
+   ```
+3. CD into landing-page and npm start!
+   ```sh
+   cd .\landing-page\
+   npm start
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
