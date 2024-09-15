@@ -124,16 +124,16 @@ const StockTicker = () => {
           <VictoryPie
             data={companyPieChartData}
             colorScale={pastelColorScale}
-            width={325} // Reduced from 330
-            height={400}
-            padding={50}
-            labelRadius={({ innerRadius }) => innerRadius + 70 }
+            width={375} // Increased from 325
+            height={460} // Increased from 400
+            padding={60} // Slightly increased padding
+            labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
             labelComponent={
               <VictoryLabel
                 angle={0}
                 textAnchor="middle"
                 verticalAnchor="middle"
-                style={{ fontSize: 9, fill: "black", fontWeight: "bold" }}
+                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
                 text={({ datum }) => {
                   const percentage = ((datum.y / calculateTotalValue()) * 100).toFixed(1);
                   return `${datum.x}\n${percentage}%`;
@@ -144,9 +144,9 @@ const StockTicker = () => {
         </div>
         <div className="stock-graph">
           <VictoryChart
-            width={420} // Reduced from 430
-            height={400}
-            padding={{ top: 50, bottom: 50, left: 50, right: 50 }}
+            width={480} // Increased from 420
+            height={460} // Increased from 400
+            padding={{ top: 60, bottom: 60, left: 60, right: 60 }} // Increased padding
             containerComponent={
               <VictoryVoronoiContainer
                 labels={({ datum }) => `Day ${datum.x + 1}: $${datum.y.toFixed(2)}`}
@@ -174,7 +174,7 @@ const StockTicker = () => {
                 y: price
               }))}
               style={{
-                data: { stroke: "#c43a31" },
+                data: { stroke: "#6495ED" },
               }}
             />
           </VictoryChart>
@@ -183,16 +183,16 @@ const StockTicker = () => {
           <VictoryPie
             data={assetAllocationData}
             colorScale={pastelColorScale}
-            width={325} // Reduced from 330
-            height={400}
-            padding={50}
-            labelRadius={({ innerRadius }) => innerRadius + 70 }
+            width={375} // Increased from 325
+            height={460} // Increased from 400
+            padding={60} // Slightly increased padding
+            labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
             labelComponent={
               <VictoryLabel
                 angle={0}
                 textAnchor="middle"
                 verticalAnchor="middle"
-                style={{ fontSize: 9, fill: "black", fontWeight: "bold" }}
+                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
                 text={({ datum }) => `${datum.x}\n${datum.y.toFixed(1)}%`}
               />
             }
