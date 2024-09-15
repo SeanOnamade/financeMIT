@@ -10,8 +10,9 @@ const ConvoContainer = styled.div`
   height: 650px;
   // border: 1px solid #ccc; delete for now?
   border-radius: 15px;
-  background-color: #fffffe;
+  // background-color: rgb(255, 255, 254, 0.3);
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 1px );
 `;
 
 const ConvoTitle = styled.h2`
@@ -31,6 +32,7 @@ const MessageContainer = styled.div`
   display: flex;
   justify-content: ${props => props.isUser ? 'flex-end' : 'flex-start'};
   margin: 10px 0;
+  text-align: left;
 `;
 
 const MessageBubble = styled.div`
@@ -59,6 +61,7 @@ const SendButton = styled.button`
   border-radius: 20px;
   cursor: pointer;
   font-size: 16px;
+  transition: all 0.15s ease;
 
   &:hover {
     background-color: #45a049;
@@ -70,14 +73,17 @@ const MessageList = styled.div`
   overflow-y: auto;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: rgb(243 244 246);
+  background-color: rgb(243, 244, 246, 0.6);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `;
 
 const InputArea = styled.div`
   display: flex;
   padding: 10px;
   // border-top: 1px solid #ccc;
-  background-color: #fff;
+  // background-color: #fff;
+  background-color: rgb(255, 255, 254, 0.6);
   flex-direction: row;
   justify-content: space-evenly;
   border-radius: 20px;

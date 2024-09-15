@@ -144,7 +144,7 @@ const StockTicker = () => {
   ];
 
   return (
-    <div className="stock-ticker bg-gray-100 rounded-lg pt-10 pb-10" style={{boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )'}}>
+    <div className="stock-ticker rounded-lg pt-10 pb-10" style={{boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )'}}>
       {/* backgroundColor: 'rgba(243, 244, 246, 0.70)',  */}
       <h2 className="text-4xl italic font-bold">
         {label}{' '}
