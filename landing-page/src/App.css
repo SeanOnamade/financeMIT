@@ -36,3 +36,123 @@
     transform: rotate(360deg);
   }
 }
+
+/* Stock Ticker Styles */
+.stock-ticker {
+  text-align: center;
+  position: relative;
+}
+
+.company-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.company-buttons button {
+  box-sizing: border-box;
+  padding: 15px 60px 15px 20px; /* Increase vertical padding */
+  margin: 5px 0;
+  cursor: pointer;
+  font-size: 0.99rem;
+  font-weight: bold;
+  border: none;
+  background-color: #F5FBFF;
+  border-radius: 5px;
+  transition: all 0.8s ease;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  height: 50px; /* Set a fixed height instead of min-height */
+}
+
+.company-buttons button::after {
+  content: '▶';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.8s ease;
+}
+
+.company-buttons button:hover {
+  background-color: #ddd;
+}
+
+.company-buttons button.active {
+  background-color: #ADD8E6;
+  color: white;
+  height: auto; /* Allow height to expand when active */
+  padding-top: 18px;
+  padding-bottom: 18px;
+  transition: all 0.5s ease;
+}
+
+.company-buttons button.active::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.graph-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px; /* Adjust if needed */
+  height: 450px;
+  margin: 0 auto;
+  gap: 46px; /* Increased from 40px to 46px (15% increase) */
+}
+
+.pie-chart {
+  flex: 0 0 325px; /* Slightly reduced from 330px */
+  height: 400px;
+}
+
+.stock-graph {
+  flex: 0 0 420px; /* Slightly reduced from 430px */
+  height: 400px;
+}
+
+canvas {
+  border: 1px solid #ccc;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #333;
+  padding: 5px;
+  border-radius: 3px;
+  pointer-events: none;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.expanded-news-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 10px;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.company-buttons button.active .expanded-news-content {
+  max-height: 1000px;
+  opacity: 1;
+}
+

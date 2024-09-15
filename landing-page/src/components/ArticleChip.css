@@ -1,0 +1,60 @@
+.article-chip {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px 10px 5px;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: calc(33.33% - 10px); /* Adjust width to fit 3 chips, accounting for margins */
+    box-sizing: border-box;
+  }
+  
+  .article-chip:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .article-image {
+    width: 90%;
+    height: 90px;
+    border-radius: 5px;
+    object-fit: cover; /* This will maintain aspect ratio */
+    margin-bottom: 8px;
+  }
+  
+  .article-content {
+    display: flex;
+    align-items: flex-start; /* Changed from center to flex-start */
+    justify-content: space-between;
+    padding: 0 5%; /* Increase side margins by 10% (5% on each side) */
+  }
+  
+  .article-summary {
+    flex: 1;
+    font-size: 1rem; /* Increased from 0.945rem to 1.1rem */
+    margin: 0 0 5px 0;
+    color: #333;
+    /* Remove white-space, overflow, and text-overflow properties */
+    word-wrap: break-word; /* Allow long words to break and wrap */
+    overflow-wrap: break-word; /* Alternative to word-wrap for better browser support */
+    max-height: 3.6em; /* Limit to 3 lines (assuming 1.2em line height) */
+    line-height: 1.2em;
+    display: -webkit-box;
+    text-align: center;
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-box-orient: vertical;
+    white-space: pre-wrap;
+    word-break: break-word;
+    /* overflow: hidden; */
+  }
+  
+  .link-icon {
+    margin-left: 30px; /* Increased from 10px to 30px */
+    font-size: 0.9rem; /* Slightly increased from 0.8rem */
+    color: #007bff;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+    align-self: flex-end;
+  }
