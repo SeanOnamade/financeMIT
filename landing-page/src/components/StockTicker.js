@@ -36,7 +36,8 @@ const StockTicker = () => {
   const [selectedCompany, setSelectedCompany] = useState(null); // Default to portfolio (null)
   const [hoveredPrice, setHoveredPrice] = useState(null);
   const [expandedCompany, setExpandedCompany] = useState(null);
-  const [trendData, setTrendData] = useState('');
+  const [trendData, setTrendData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Calculate cumulative sum of all stock prices (entire portfolio)
   const calculatePortfolioCumulative = () => {
@@ -112,7 +113,22 @@ const StockTicker = () => {
       const messageContent = response.data.choices[0].message.content;
       console.log('Extracted message content:', messageContent);
 
-      return messageContent;
+      // Parse the string content
+      const overallTrend = messageContent.split('**Overall Trend:**')[1].split('\n\n')[0].trim();
+      
+      const newsArticlesSection = messageContent.split('**Relevant News Articles:**')[1];
+      const newsArticles = newsArticlesSection.split('\n-').slice(1).map(article => {
+        const [description, url] = article.split('(');
+        return {
+          description: description.trim(),
+          url: url ? url.slice(0, -1).trim() : '#'
+        };
+      });
+
+      return {
+        overallTrend,
+        newsArticles
+      };
     } catch (error) {
       console.error('Error fetching stock trend:', error.response || error);
       throw error;
@@ -120,18 +136,26 @@ const StockTicker = () => {
   };
 
   const handleCompanyClick = (symbol) => {
-    setSelectedCompany(symbol);
-    setExpandedCompany(symbol);
-
-    if (symbol) {
+    if (symbol === selectedCompany) {
+      // If clicking the same company, toggle the expanded state
+      setExpandedCompany(expandedCompany === symbol ? null : symbol);
+    } else {
+      // If clicking a different company, reset and start loading
+      setSelectedCompany(symbol);
+      setExpandedCompany(symbol);
+      setTrendData(null);
+      setIsLoading(true);
+  
       fetchStockTrend(symbol)
-        .then(content => {
-          console.log(`Trend data for ${symbol}:`, content);
-          setTrendData(content);
+        .then(data => {
+          console.log(`Trend data for ${symbol}:`, data);
+          setTrendData(data);
+          setIsLoading(false);
         })
         .catch(error => {
           console.error(`Failed to fetch trend for ${symbol}:`, error);
-          setTrendData('Failed to fetch trend data');
+          setTrendData(null);
+          setIsLoading(false);
         });
     }
   };
@@ -245,24 +269,29 @@ const StockTicker = () => {
             className={`${company.symbol === selectedCompany ? 'active' : ''} ${company.symbol === expandedCompany ? 'expanded active' : ''}`}
           >
             {company.name}
-            <div className="expanded-news-content">
-              {company.symbol === expandedCompany && (
-                <ArticleChip
-                  key="trend-data"
-                  imageUrl={`https://picsum.photos/100/80?random=${company.symbol}0`}
-                  summary={trendData || `Loading trend data for ${company.name}...`}
-                  link="#"
-                />
-              )}
-              {getPlaceholderHeadlines(company.name).slice(1).map((headline, index) => (
-                <ArticleChip
-                  key={index + 1}
-                  imageUrl={`https://picsum.photos/100/80?random=${company.symbol}${index + 1}`}
-                  summary={headline}
-                  link="#"
-                />
-              ))}
-            </div>
+            {company.symbol === expandedCompany && (
+  <div className="expanded-news-content">
+    {[0, 1, 2].map((index) => (
+      <ArticleChip
+        key={index}
+        imageUrl={`https://picsum.photos/100/80?random=${company.symbol}${index}`}
+        summary={
+          isLoading
+            ? `Fetching article ${index + 1}...`
+            : trendData && trendData.newsArticles[index]
+            ? trendData.newsArticles[index].description
+            : `No article data available`
+        }
+        link={
+          trendData && trendData.newsArticles[index]
+            ? trendData.newsArticles[index].url
+            : '#'
+        }
+        isLoading={isLoading}
+      />
+    ))}
+  </div>
+)}
           </button>
         ))}
       </div>
