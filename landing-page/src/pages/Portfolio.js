@@ -4,7 +4,6 @@ import StockTicker from "../components/StockTicker";
 function Portfolio(){
     return (
         <div>
-            <p>hello portfolio</p>
             <StockTicker/>
         </div>
     )
