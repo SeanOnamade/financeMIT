@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className="App max-w-7xl mx-auto p-5"> 
-    <night-sky id="nightSky"></night-sky>
+      {/* <night-sky id="nightSky"></night-sky> */}
       {/* can remove the max-w-5xl and mx-auto parts! They just narrow the page */}
       <Navbar />
       <Portfolio />
