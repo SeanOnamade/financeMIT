@@ -80,6 +80,7 @@ Created @ HackMIT with
 * [![Flask][Flask-shield]][Flask-url]
 * [![Tailwind][Tailwind-shield]][Tailwind-url]
 * Perplexity
+* Victory
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

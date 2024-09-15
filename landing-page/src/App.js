@@ -6,7 +6,7 @@ import Newsfeed from './pages/Newsfeed';
 import Convo from './pages/Convo';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 function App() {
   useEffect(() => {
@@ -21,14 +21,24 @@ function App() {
     }
   }, []);
 
+  const portfolioRef = useRef(null);
+  const convoRef = useRef(null);
+  const newsFeedRef = useRef(null);
+
   return (
     <div className="App max-w-7xl mx-auto p-5"> 
       {/* <night-sky id="nightSky"></night-sky> */}
       {/* can remove the max-w-5xl and mx-auto parts! They just narrow the page */}
-      <Navbar />
-      <Portfolio />
-      <Convo />
+      <Navbar portfolioRef = {portfolioRef} convoRef = {convoRef} newsFeedRef = {newsFeedRef} />
+      <section id="portfolio" ref={portfolioRef}>
+        <Portfolio />
+      </section>
+      <section id="convo" ref={convoRef}>
+        <Convo />
+      </section>
+      <section id="newsfeed" ref={newsFeedRef}>
       <Newsfeed />
+      </section>
       <Footer />
     </div>
   );
