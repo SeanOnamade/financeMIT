@@ -8,9 +8,10 @@ const ConvoContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 650px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  // border: 1px solid #ccc; delete for now?
+  border-radius: 15px;
   background-color: #fffffe;
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
 `;
 
 const ConvoTitle = styled.h2`
@@ -18,6 +19,8 @@ const ConvoTitle = styled.h2`
   padding: 15px;
   margin: 0;
   font-size: 30px;
+  font-style: italic;
+  font-weight: bold;
   background-color: #6495ED;
   color: white;
   border-top-left-radius: 10px;
@@ -31,7 +34,7 @@ const MessageContainer = styled.div`
 `;
 
 const MessageBubble = styled.div`
-  background-color: ${props => props.isUser ? '#E3F2FD' : '#F5F5F5'};
+  background-color: ${props => props.isUser ? '#E3F2FD' : '#E5E7EB'}; // before was F5F5F5
   color: ${props => props.isUser ? '#000000' : '#000000'};
   padding: 10px 15px;
   border-radius: 18px;
@@ -67,13 +70,18 @@ const MessageList = styled.div`
   overflow-y: auto;
   padding: 10px;
   margin-bottom: 10px;
+  background-color: rgb(243 244 246);
 `;
 
 const InputArea = styled.div`
   display: flex;
   padding: 10px;
-  border-top: 1px solid #ccc;
+  // border-top: 1px solid #ccc;
   background-color: #fff;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border-radius: 20px;
+  margin-bottom: 10px;
 `;
 
 function Convo() {

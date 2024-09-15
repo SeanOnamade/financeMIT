@@ -1,3 +1,17 @@
+body{
+  background-color: black;
+}
+
+#nightSky {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Make sure it's behind other content */
+}
+
 .App {
   text-align: center;
 }
@@ -46,7 +60,7 @@
 }
 
 .company-buttons {
-  margin-top: 20px;
+  margin-top: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -109,7 +123,7 @@
   max-width: 1400px; /* Increased from 1200px */
   height: 520px; /* Increased from 450px */
   margin: 0 auto;
-  gap: 46px;
+  gap: 0px;
 }
 
 .pie-chart {

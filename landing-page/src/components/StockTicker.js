@@ -63,7 +63,7 @@ const StockTicker = () => {
 
   const prices = getDisplayedPrices();
   const percentageChange = calculatePercentageChange(prices);
-  const label = selectedCompany ? companies.find(c => c.symbol === selectedCompany).name : 'Entire Portfolio';
+  const label = selectedCompany ? companies.find(c => c.symbol === selectedCompany).name : 'Your Portfolio';
 
   // Calculate the total value of all stocks
   const calculateTotalValue = () => {
@@ -111,92 +111,93 @@ const StockTicker = () => {
   ];
 
   return (
-    <div className="stock-ticker">
-      <h2>
+    <div className="stock-ticker bg-gray-100 rounded-lg pt-10 pb-10" style={{boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )'}}>
+      {/* backgroundColor: 'rgba(243, 244, 246, 0.70)',  */}
+      <h2 className="text-4xl italic font-bold">
         {label}{' '}
         <span style={{ color: percentageChange > 0 ? 'green' : 'red', fontWeight: 'bold' }}>
-          ({percentageChange}%)
+          ({percentageChange > 0 ? '+' : ''}{percentageChange}%)
         </span>
       </h2>
 
-      <div className="graph-container">
-        <div className="pie-chart">
-          <VictoryPie
-            data={companyPieChartData}
-            colorScale={pastelColorScale}
-            width={375} // Increased from 325
-            height={460} // Increased from 400
-            padding={60} // Slightly increased padding
-            labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
-            labelComponent={
-              <VictoryLabel
-                angle={0}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
-                text={({ datum }) => {
-                  const percentage = ((datum.y / calculateTotalValue()) * 100).toFixed(1);
-                  return `${datum.x}\n${percentage}%`;
+      <div className='flex flex-row justify-evenly align-middle items-center'>
+
+        <div className="graph-container gap-0" style={{maxHeight: '400px'}} width={1000}>
+          <div className="pie-chart">
+            <VictoryPie
+              data={companyPieChartData}
+              colorScale={pastelColorScale}
+              width={360} // Increased from 325
+              // padding={60} // Slightly increased padding
+              labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
+              labelComponent={
+                <VictoryLabel
+                  angle={0}
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                  style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
+                  text={({ datum }) => {
+                    const percentage = ((datum.y / calculateTotalValue()) * 100).toFixed(1);
+                    return `${datum.x}\n${percentage}%`;
+                  }}
+                />
+              }
+            />
+          </div>
+          <div className="stock-graph p-0">
+            <VictoryChart
+              width={420} // Increased from 420
+              containerComponent={
+                <VictoryVoronoiContainer
+                  labels={({ datum }) => `Day ${datum.x + 1}: $${datum.y.toFixed(2)}`}
+                  labelComponent={<VictoryTooltip />}
+                />
+              }
+            >
+              <VictoryAxis
+                tickFormat={(t) => `Day ${t}`}
+                tickCount={7}
+                style={{
+                  tickLabels: { fontSize: 10, padding: 5 }
                 }}
               />
-            }
-          />
-        </div>
-        <div className="stock-graph">
-          <VictoryChart
-            width={480} // Increased from 420
-            height={460} // Increased from 400
-            padding={{ top: 60, bottom: 60, left: 60, right: 60 }} // Increased padding
-            containerComponent={
-              <VictoryVoronoiContainer
-                labels={({ datum }) => `Day ${datum.x + 1}: $${datum.y.toFixed(2)}`}
-                labelComponent={<VictoryTooltip />}
+              <VictoryAxis
+                dependentAxis
+                tickFormat={(t) => `$${t}`}
+                style={{
+                  tickLabels: { fontSize: 10, padding: 5 }
+                }}
               />
-            }
-          >
-            <VictoryAxis
-              tickFormat={(t) => `Day ${t}`}
-              tickCount={7}
-              style={{
-                tickLabels: { fontSize: 10, padding: 5 }
-              }}
-            />
-            <VictoryAxis
-              dependentAxis
-              tickFormat={(t) => `$${t}`}
-              style={{
-                tickLabels: { fontSize: 10, padding: 5 }
-              }}
-            />
-            <VictoryLine
-              data={prices.map((price, index) => ({
-                x: index,
-                y: price
-              }))}
-              style={{
-                data: { stroke: "#6495ED" },
-              }}
-            />
-          </VictoryChart>
-        </div>
-        <div className="pie-chart">
-          <VictoryPie
-            data={assetAllocationData}
-            colorScale={pastelColorScale}
-            width={375} // Increased from 325
-            height={460} // Increased from 400
-            padding={60} // Slightly increased padding
-            labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
-            labelComponent={
-              <VictoryLabel
-                angle={0}
-                textAnchor="middle"
-                verticalAnchor="middle"
-                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
-                text={({ datum }) => `${datum.x}\n${datum.y.toFixed(1)}%`}
+              <VictoryLine
+                data={prices.map((price, index) => ({
+                  x: index,
+                  y: price
+                }))}
+                style={{
+                  data: { stroke: "#6495ED" },
+                }}
               />
-            }
-          />
+            </VictoryChart>
+          </div>
+          <div className="pie-chart">
+            <VictoryPie
+              data={assetAllocationData}
+              colorScale={pastelColorScale}
+              width={360} // Increased from 325
+              // padding={60} // Slightly increased padding
+              labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
+              labelComponent={
+                <VictoryLabel
+                  angle={0}
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                  style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
+                  text={({ datum }) => `${datum.x}\n${datum.y.toFixed(1)}%`}
+                />
+              }
+            />
+          </div>
+
         </div>
       </div>
 

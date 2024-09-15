@@ -3,7 +3,7 @@ import StockTicker from "../components/StockTicker";
 
 function Portfolio(){
     return (
-        <div style={{marginBottom: "100px"}}>
+        <div style={{marginBottom: "40px"}}>
             <StockTicker/>
         </div>
     )
