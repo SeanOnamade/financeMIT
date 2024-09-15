@@ -1,18 +1,20 @@
-from flask import Flask
-from prompting.prompt import *
+from flask import Flask, jsonify
+from flask_cors import CORS
+from prompting.prompt import get_stock_trend
 
 app = Flask(__name__)
-
-@app.route('/') # ‘https://www.google.com/‘
-def home():
-	return "This is the backend server for Pocket!"
+CORS(app, resources={r"/stock/*": {"origins": "http://localhost:3000"}})
 
 @app.route('/stock/<string:stock>')
 def show_post(stock):
-    return get_stock_trend(stock)
+	app.logger.info(f"Received request for stock: {stock}")
+	try:
+		result = get_stock_trend(stock)
+		app.logger.info(f"Result: {result}")
+		return jsonify(result)
+	except Exception as e:
+		app.logger.error(f"Error processing request: {str(e)}")
+		return jsonify({"error": str(e)}), 500
 
-@app.route('/ask/<string:question>')
-def show_post(question):
-    return ask_perplexity(question)
-
-app.run(port=5000)
+if __name__ == '__main__':
+	app.run(host='127.0.0.1', port=5000, debug=True)

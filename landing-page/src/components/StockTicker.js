@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { VictoryPie, VictoryChart, VictoryLine, VictoryAxis, VictoryTooltip, VictoryVoronoiContainer, VictoryLabel } from 'victory';
 import ArticleChip from './ArticleChip';
+import axios from 'axios';
 
 // Generate random stock prices for a given company over 3 months (90 days)
 const generateStockPrices = () => {
@@ -35,6 +36,7 @@ const StockTicker = () => {
   const [selectedCompany, setSelectedCompany] = useState(null); // Default to portfolio (null)
   const [hoveredPrice, setHoveredPrice] = useState(null);
   const [expandedCompany, setExpandedCompany] = useState(null);
+  const [trendData, setTrendData] = useState('');
 
   // Calculate cumulative sum of all stock prices (entire portfolio)
   const calculatePortfolioCumulative = () => {
@@ -98,9 +100,40 @@ const StockTicker = () => {
   const total = assetAllocationData.reduce((sum, item) => sum + item.y, 0);
   assetAllocationData.forEach(item => item.y = (item.y / total) * 100);
 
+  const fetchStockTrend = async (stockSymbol) => {
+    const apiUrl = `http://127.0.0.1:5000/stock/${stockSymbol}`;
+
+    try {
+      console.log(`Fetching data for ${stockSymbol}`);
+      const response = await axios.get(apiUrl);
+      console.log('Stock trend data:', response.data);
+      
+      // Extract the message content
+      const messageContent = response.data.choices[0].message.content;
+      console.log('Extracted message content:', messageContent);
+
+      return messageContent;
+    } catch (error) {
+      console.error('Error fetching stock trend:', error.response || error);
+      throw error;
+    }
+  };
+
   const handleCompanyClick = (symbol) => {
-    setSelectedCompany(selectedCompany === symbol ? null : symbol);
-    setExpandedCompany(expandedCompany === symbol ? null : symbol);
+    setSelectedCompany(symbol);
+    setExpandedCompany(symbol);
+
+    if (symbol) {
+      fetchStockTrend(symbol)
+        .then(content => {
+          console.log(`Trend data for ${symbol}:`, content);
+          setTrendData(content);
+        })
+        .catch(error => {
+          console.error(`Failed to fetch trend for ${symbol}:`, error);
+          setTrendData('Failed to fetch trend data');
+        });
+    }
   };
 
   // Function to generate placeholder headlines
@@ -120,84 +153,86 @@ const StockTicker = () => {
         </span>
       </h2>
 
-      <div className='flex flex-row justify-evenly align-middle items-center'>
-
-        <div className="graph-container gap-0" style={{maxHeight: '400px'}} width={1000}>
-          <div className="pie-chart">
-            <VictoryPie
-              data={companyPieChartData}
-              colorScale={pastelColorScale}
-              width={360} // Increased from 325
-              // padding={60} // Slightly increased padding
-              labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
-              labelComponent={
-                <VictoryLabel
-                  angle={0}
-                  textAnchor="middle"
-                  verticalAnchor="middle"
-                  style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
-                  text={({ datum }) => {
-                    const percentage = ((datum.y / calculateTotalValue()) * 100).toFixed(1);
-                    return `${datum.x}\n${percentage}%`;
-                  }}
-                />
-              }
+      <div className="graph-container">
+        <div className="pie-chart">
+        <h3>Largest Holdings</h3>
+          <VictoryPie
+            data={companyPieChartData}
+            colorScale={pastelColorScale}
+            width={375} // Increased from 325
+            height={460} // Increased from 400
+            padding={60} // Slightly increased padding
+            labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
+            labelComponent={
+              <VictoryLabel
+                angle={0}
+                textAnchor="middle"
+                verticalAnchor="middle"
+                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
+                text={({ datum }) => {
+                  const percentage = ((datum.y / calculateTotalValue()) * 100).toFixed(1);
+                  return `${datum.x}\n${percentage}%`;
+                }}
+              />
+            }
+          />
+        </div>
+        <div className="stock-graph">
+          <VictoryChart
+            width={480} // Increased from 420
+            height={460} // Increased from 400
+            padding={{ top: 60, bottom: 60, left: 60, right: 60 }} // Increased padding
+            containerComponent={
+              <VictoryVoronoiContainer
+                labels={({ datum }) => `Day ${datum.x + 1}: $${datum.y.toFixed(2)}`}
+                labelComponent={<VictoryTooltip />}
+              />
+            }
+          >
+            <VictoryAxis
+              tickFormat={(t) => `Day ${t}`}
+              tickCount={7}
+              style={{
+                tickLabels: { fontSize: 10, padding: 5 }
+              }}
             />
-          </div>
-          <div className="stock-graph p-0">
-            <VictoryChart
-              width={420} // Increased from 420
-              containerComponent={
-                <VictoryVoronoiContainer
-                  labels={({ datum }) => `Day ${datum.x + 1}: $${datum.y.toFixed(2)}`}
-                  labelComponent={<VictoryTooltip />}
-                />
-              }
-            >
-              <VictoryAxis
-                tickFormat={(t) => `Day ${t}`}
-                tickCount={7}
-                style={{
-                  tickLabels: { fontSize: 10, padding: 5 }
-                }}
-              />
-              <VictoryAxis
-                dependentAxis
-                tickFormat={(t) => `$${t}`}
-                style={{
-                  tickLabels: { fontSize: 10, padding: 5 }
-                }}
-              />
-              <VictoryLine
-                data={prices.map((price, index) => ({
-                  x: index,
-                  y: price
-                }))}
-                style={{
-                  data: { stroke: "#6495ED" },
-                }}
-              />
-            </VictoryChart>
-          </div>
-          <div className="pie-chart">
-            <VictoryPie
-              data={assetAllocationData}
-              colorScale={pastelColorScale}
-              width={360} // Increased from 325
-              // padding={60} // Slightly increased padding
-              labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
-              labelComponent={
-                <VictoryLabel
-                  angle={0}
-                  textAnchor="middle"
-                  verticalAnchor="middle"
-                  style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
-                  text={({ datum }) => `${datum.x}\n${datum.y.toFixed(1)}%`}
-                />
-              }
+            <VictoryAxis
+              dependentAxis
+              tickFormat={(t) => `$${t}`}
+              style={{
+                tickLabels: { fontSize: 10, padding: 5 }
+              }}
             />
-          </div>
-
+            <VictoryLine
+              data={prices.map((price, index) => ({
+                x: index,
+                y: price
+              }))}
+              style={{
+                data: { stroke: "#6495ED" },
+              }}
+            />
+          </VictoryChart>
+        </div>
+        <div className="pie-chart">
+        <h3>Asset Class</h3>
+          <VictoryPie
+            data={assetAllocationData}
+            colorScale={pastelColorScale}
+            width={375} // Increased from 325
+            height={460} // Increased from 400
+            padding={60} // Slightly increased padding
+            labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
+            labelComponent={
+              <VictoryLabel
+                angle={0}
+                textAnchor="middle"
+                verticalAnchor="middle"
+                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
+                text={({ datum }) => `${datum.x}\n${datum.y.toFixed(1)}%`}
+              />
+            }
+          />
         </div>
       </div>
 
@@ -211,15 +246,22 @@ const StockTicker = () => {
           >
             {company.name}
             <div className="expanded-news-content">
-              {company.symbol === expandedCompany &&
-                getPlaceholderHeadlines(company.name).map((headline, index) => (
-                  <ArticleChip
-                    key={index}
-                    imageUrl={`https://picsum.photos/100/80?random=${company.symbol}${index}`}
-                    summary={headline}
-                    link="#"
-                  />
-                ))}
+              {company.symbol === expandedCompany && (
+                <ArticleChip
+                  key="trend-data"
+                  imageUrl={`https://picsum.photos/100/80?random=${company.symbol}0`}
+                  summary={trendData || `Loading trend data for ${company.name}...`}
+                  link="#"
+                />
+              )}
+              {getPlaceholderHeadlines(company.name).slice(1).map((headline, index) => (
+                <ArticleChip
+                  key={index + 1}
+                  imageUrl={`https://picsum.photos/100/80?random=${company.symbol}${index + 1}`}
+                  summary={headline}
+                  link="#"
+                />
+              ))}
             </div>
           </button>
         ))}
