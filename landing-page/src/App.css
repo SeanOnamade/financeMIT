@@ -41,6 +41,8 @@
 .stock-ticker {
   text-align: center;
   position: relative;
+  font-size: 32px;
+  font-weight: 500;
 }
 
 .company-buttons {
@@ -104,20 +106,20 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px; /* Adjust if needed */
-  height: 450px;
+  max-width: 1400px; /* Increased from 1200px */
+  height: 520px; /* Increased from 450px */
   margin: 0 auto;
-  gap: 46px; /* Increased from 40px to 46px (15% increase) */
+  gap: 46px;
 }
 
 .pie-chart {
-  flex: 0 0 325px; /* Slightly reduced from 330px */
-  height: 400px;
+  flex: 0 0 375px; /* Increased from 325px */
+  height: 460px; /* Increased from 400px */
 }
 
 .stock-graph {
-  flex: 0 0 420px; /* Slightly reduced from 430px */
-  height: 400px;
+  flex: 0 0 480px; /* Increased from 420px */
+  height: 460px; /* Increased from 400px */
 }
 
 canvas {
