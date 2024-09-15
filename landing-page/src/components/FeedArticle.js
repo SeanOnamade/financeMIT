@@ -51,7 +51,7 @@ function Post(props) {
         <div className="post rounded-md p-6">
             <div>
             <a href={props.link} target="_blank" rel="noreferrer">
-            <article className="flex flex-row p-8 hover:cursor-pointer rounded-lg bg-gray-100 hover:bg-gray-200 transition duration-300 ease-in-out" style={{boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )'}}>
+            <article className="flex flex-row p-8 hover:cursor-pointer rounded-lg hover:text-white transition duration-300 ease-in-out" style={{boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )', backgroundColor: 'rgb(234, 244, 245, 0.8)'}}>
 
                 <div className="ArticleImage w-1/4 m-6 object-contain flex align-middle items-center justify-center" style={{ height: '256px'}}>
                     <img src={props.image} className="rounded-md" alt=""></img>
@@ -63,7 +63,7 @@ function Post(props) {
                         <p className="ArticleDate font-thin"> {props.date}</p>
                         {/* <time className="font-thin" datetime="2024-09-14">Sep 14, 2024</time> */}
                         <p className="ArticleTicker text-green-600 border-2 border-gray-300 rounded-lg px-1"> {props.ticker}</p>
-                        <div className="inline-block hover:text-gray-500 transition duration-150 ease-in-out"><FontAwesomeIcon icon={faArrowUpRightFromSquare} /></div>
+                        <div className="inline-block"><FontAwesomeIcon icon={faArrowUpRightFromSquare} /></div>
                     </div>
                     <div className="ArticleMidText">
                         <h3 className="ArticleTitle font-bold pb-5 text-2xl">{props.title}</h3>
