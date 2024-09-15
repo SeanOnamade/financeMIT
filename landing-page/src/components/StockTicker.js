@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { VictoryPie, VictoryChart, VictoryLine, VictoryAxis, VictoryTooltip, VictoryVoronoiContainer, VictoryLabel } from 'victory';
 import ArticleChip from './ArticleChip';
+import axios from 'axios';
 
 // Generate random stock prices for a given company over 3 months (90 days)
 const generateStockPrices = () => {
@@ -35,6 +36,7 @@ const StockTicker = () => {
   const [selectedCompany, setSelectedCompany] = useState(null); // Default to portfolio (null)
   const [hoveredPrice, setHoveredPrice] = useState(null);
   const [expandedCompany, setExpandedCompany] = useState(null);
+  const [trendData, setTrendData] = useState('');
 
   // Calculate cumulative sum of all stock prices (entire portfolio)
   const calculatePortfolioCumulative = () => {
@@ -98,9 +100,40 @@ const StockTicker = () => {
   const total = assetAllocationData.reduce((sum, item) => sum + item.y, 0);
   assetAllocationData.forEach(item => item.y = (item.y / total) * 100);
 
+  const fetchStockTrend = async (stockSymbol) => {
+    const apiUrl = `http://127.0.0.1:5000/stock/${stockSymbol}`;
+
+    try {
+      console.log(`Fetching data for ${stockSymbol}`);
+      const response = await axios.get(apiUrl);
+      console.log('Stock trend data:', response.data);
+      
+      // Extract the message content
+      const messageContent = response.data.choices[0].message.content;
+      console.log('Extracted message content:', messageContent);
+
+      return messageContent;
+    } catch (error) {
+      console.error('Error fetching stock trend:', error.response || error);
+      throw error;
+    }
+  };
+
   const handleCompanyClick = (symbol) => {
-    setSelectedCompany(selectedCompany === symbol ? null : symbol);
-    setExpandedCompany(expandedCompany === symbol ? null : symbol);
+    setSelectedCompany(symbol);
+    setExpandedCompany(symbol);
+
+    if (symbol) {
+      fetchStockTrend(symbol)
+        .then(content => {
+          console.log(`Trend data for ${symbol}:`, content);
+          setTrendData(content);
+        })
+        .catch(error => {
+          console.error(`Failed to fetch trend for ${symbol}:`, error);
+          setTrendData('Failed to fetch trend data');
+        });
+    }
   };
 
   // Function to generate placeholder headlines
@@ -121,19 +154,20 @@ const StockTicker = () => {
 
       <div className="graph-container">
         <div className="pie-chart">
+          <h3>Largest Holdings</h3>
           <VictoryPie
             data={companyPieChartData}
             colorScale={pastelColorScale}
-            width={375} // Increased from 325
-            height={460} // Increased from 400
-            padding={60} // Slightly increased padding
-            labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
+            width={375}
+            height={460}
+            padding={60}
+            labelRadius={({ innerRadius }) => innerRadius + 80 }
             labelComponent={
               <VictoryLabel
                 angle={0}
                 textAnchor="middle"
                 verticalAnchor="middle"
-                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
+                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }}
                 text={({ datum }) => {
                   const percentage = ((datum.y / calculateTotalValue()) * 100).toFixed(1);
                   return `${datum.x}\n${percentage}%`;
@@ -144,9 +178,9 @@ const StockTicker = () => {
         </div>
         <div className="stock-graph">
           <VictoryChart
-            width={480} // Increased from 420
-            height={460} // Increased from 400
-            padding={{ top: 60, bottom: 60, left: 60, right: 60 }} // Increased padding
+            width={480}
+            height={460}
+            padding={{ top: 60, bottom: 60, left: 60, right: 60 }}
             containerComponent={
               <VictoryVoronoiContainer
                 labels={({ datum }) => `Day ${datum.x + 1}: $${datum.y.toFixed(2)}`}
@@ -180,19 +214,20 @@ const StockTicker = () => {
           </VictoryChart>
         </div>
         <div className="pie-chart">
+          <h3>Asset Class</h3>
           <VictoryPie
             data={assetAllocationData}
             colorScale={pastelColorScale}
-            width={375} // Increased from 325
-            height={460} // Increased from 400
-            padding={60} // Slightly increased padding
-            labelRadius={({ innerRadius }) => innerRadius + 80 } // Adjusted for larger size
+            width={375}
+            height={460}
+            padding={60}
+            labelRadius={({ innerRadius }) => innerRadius + 80 }
             labelComponent={
               <VictoryLabel
                 angle={0}
                 textAnchor="middle"
                 verticalAnchor="middle"
-                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }} // Increased font size
+                style={{ fontSize: 10, fill: "black", fontWeight: "bold" }}
                 text={({ datum }) => `${datum.x}\n${datum.y.toFixed(1)}%`}
               />
             }
@@ -210,15 +245,22 @@ const StockTicker = () => {
           >
             {company.name}
             <div className="expanded-news-content">
-              {company.symbol === expandedCompany &&
-                getPlaceholderHeadlines(company.name).map((headline, index) => (
-                  <ArticleChip
-                    key={index}
-                    imageUrl={`https://picsum.photos/100/80?random=${company.symbol}${index}`}
-                    summary={headline}
-                    link="#"
-                  />
-                ))}
+              {company.symbol === expandedCompany && (
+                <ArticleChip
+                  key="trend-data"
+                  imageUrl={`https://picsum.photos/100/80?random=${company.symbol}0`}
+                  summary={trendData || `Loading trend data for ${company.name}...`}
+                  link="#"
+                />
+              )}
+              {getPlaceholderHeadlines(company.name).slice(1).map((headline, index) => (
+                <ArticleChip
+                  key={index + 1}
+                  imageUrl={`https://picsum.photos/100/80?random=${company.symbol}${index + 1}`}
+                  summary={headline}
+                  link="#"
+                />
+              ))}
             </div>
           </button>
         ))}
