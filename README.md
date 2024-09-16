@@ -151,6 +151,12 @@ See the [open issues](https://github.com/SeanOnamade/financemit/issues) for a fu
 <p align="center">
 <img src="https://github.com/SeanOnamade/financemit/blob/main/Screenshot4.png" />
 </p>
+<p align="center">
+<img src="https://github.com/SeanOnamade/financemit/blob/main/Screenshot5.png" />
+</p>
+<p align="center">
+<img src="https://github.com/SeanOnamade/financemit/blob/main/Screenshot6.png" />
+</p>
 
 
 <!-- CONTRIBUTING -->
