@@ -82,8 +82,8 @@ Created @ HackMIT with
 * [![Python][Python-shield]][Python-url]
 * [![Flask][Flask-shield]][Flask-url]
 * [![Tailwind][Tailwind-shield]][Tailwind-url]
-* Perplexity
-* Victory
+* Perplexity AI
+* VictoryChart by FormidableLabs
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -99,12 +99,18 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    git clone https://github.com/SeanOnamade/financeMIT.git
    ```
-2. CD in and npm i to install all packages
+2. npm i to install all packages
    ```sh
    npm i
    ```
-3. CD into landing-page and npm start!
+3. cd into backend and enter "flask run" to run the article generation software
    ```sh
+   cd .\backend\
+   flask run
+   ```
+4. In a new terminal, cd into landing-page and npm start! Ensure you **cd ..** if you were in another folder such as backend.
+   ```sh
+   cd ..
    cd .\landing-page\
    npm start
    ```
